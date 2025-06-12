@@ -94,11 +94,11 @@ world.camera.controls.addEventListener("rest", () => {
   tilesLoader.culler.needsUpdate = true;
 });
 
-const file = await fetch("/assets/road.frag");
+const file = await fetch("/assets/fullModel.frag");
 const data = await file.arrayBuffer();
 const buffer = new Uint8Array(data);
 const model = await fragments.load(buffer);
-const properties = await fetch("/assets/road.json");
+const properties = await fetch("/assets/fullModel.json");
 const props = await properties.json();
 model.setLocalProperties(props);
 console.log(model);
