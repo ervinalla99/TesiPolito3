@@ -94,11 +94,11 @@ world.camera.controls.addEventListener("rest", () => {
   tilesLoader.culler.needsUpdate = true;
 });
 
-const file = await fetch("src/road.frag");
+const file = await fetch("https://thatopen.github.io/engine_components/resources/road.frag");
 const data = await file.arrayBuffer();
 const buffer = new Uint8Array(data);
 const model = await fragments.load(buffer);
-const properties = await fetch("src/road.json");
+const properties = await fetch("https://thatopen.github.io/engine_components/resources/road.json");
 const props = await properties.json();
 model.setLocalProperties(props);
 console.log(model);
