@@ -5,11 +5,11 @@ import groupings from "./Sections/Groupings";
 const components = new OBC.Components();
 components.init();
 const fragments = components.get(OBC.FragmentsManager);
-const file = await fetch("src/fullModel.frag");
+const file = await fetch("https://thatopen.github.io/engine_components/resources/road.frag");
 const data = await file.arrayBuffer();
 const buffer = new Uint8Array(data);
 const model = await fragments.load(buffer);
-const properties = await fetch("src/fullModel.json");
+const properties = await fetch("https://thatopen.github.io/engine_components/resources/road.json");
 const props = await properties.json();
 model.setLocalProperties(props);
 export default (components: OBC.Components) => {
