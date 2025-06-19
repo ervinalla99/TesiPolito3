@@ -94,11 +94,11 @@ world.camera.controls.addEventListener("rest", () => {
   tilesLoader.culler.needsUpdate = true;
 });
 
-const file = await fetch("https://thatopen.github.io/engine_components/resources/road.frag");
+const file = await fetch("src/road.frag");
 const data = await file.arrayBuffer();
 const buffer = new Uint8Array(data);
 const model = await fragments.load(buffer);
-const properties = await fetch("https://thatopen.github.io/engine_components/resources/road.json");
+const properties = await fetch("src/road.json");
 const props = await properties.json();
 model.setLocalProperties(props);
 console.log(model);
@@ -465,20 +465,66 @@ const leftPanel = BUI.Component.create(() => {
   `;
 });
 const app = document.getElementById("app") as BUI.Grid;
+// Replace the existing app.layouts configuration with this enhanced version:
 app.layouts = {
   main: {
     template: `
       "leftPanel viewport" 1fr
-      /26rem 1fr
+      /minmax(180px, 24vw) 1fr
     `,
     elements: {
       leftPanel,
       viewport,
     },
   },
+  medium: {
+    template: `
+      "leftPanel viewport" 1fr
+      /minmax(140px, 20vw) 1fr
+    `,
+    elements: {
+      leftPanel,
+      viewport,
+    },
+  },
+  small: {
+    template: `
+      "leftPanel viewport" 1fr
+      /minmax(80px, 16vw) 1fr
+    `,
+    elements: {
+      leftPanel,
+      viewport,
+    },
+  },
+  smallSecond: {
+    template: `
+      "empty elementDataPanel" 1fr
+      "toolbar elementDataPanel" auto
+      /1fr minmax(120px, 30vw)
+    `,
+    elements: {
+      toolbar,
+      elementDataPanel,
+    },
+  },
+  
 };
 
-app.layout = "main";
+// Replace the updateAppLayout function with this enhanced version:
+function updateAppLayout() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  
+  if (width <= 900 || height <= 600) {
+    app.layout = "small";
+  } else if (width <= 1440 || height <= 900) {
+    app.layout = "medium";
+  } else {
+    app.layout = "main";
+  }
+}
+
 
 viewportGrid.layouts = {
   main: {
@@ -493,13 +539,90 @@ viewportGrid.layouts = {
     template: `
       "empty elementDataPanel" 1fr
       "toolbar elementDataPanel" auto
-      /1fr 24rem
+      /1fr minmax(200px, 28vw)
     `,
     elements: {
       toolbar,
       elementDataPanel,
     },
   },
+  mediumSecond: {
+    template: `
+      "empty elementDataPanel" 1fr
+      "toolbar elementDataPanel" auto
+      /1fr minmax(180px, 25vw)
+    `,
+    elements: {
+      toolbar,
+      elementDataPanel,
+    },
+  },
+  smallSecond: {
+    template: `
+      "empty elementDataPanel" 1fr
+      "toolbar elementDataPanel" auto
+      /1fr minmax(100px, 28vw)
+    `,
+    elements: {
+      toolbar,
+      elementDataPanel,
+    },
+  },
+  
 };
 
-viewportGrid.layout = "main";
+// Replace the updateViewportGridLayout function with this enhanced version:
+function updateViewportGridLayout() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  const currentLayout = viewportGrid.layout;
+  
+  if (width <= 900 || height <= 600) {
+    if (currentLayout === "second" || currentLayout === "mediumSecond") {
+      viewportGrid.layout = "smallSecond";
+    } else {
+      viewportGrid.layout = "main";
+    }
+  } else if (width <= 1440 || height <= 900) {
+    if (currentLayout === "second" || currentLayout === "smallSecond") {
+      viewportGrid.layout = "mediumSecond";
+    } else {
+      viewportGrid.layout = "main";
+    }
+  } else {
+    if (currentLayout === "smallSecond" || currentLayout === "mediumSecond") {
+      viewportGrid.layout = "second";
+    } else {
+      viewportGrid.layout = "main";
+    }
+  }
+}
+// Add these lines after the updateViewportGridLayout function definition:
+
+window.addEventListener("resize", updateViewportGridLayout);
+updateViewportGridLayout(); // Initial call
+
+// Also make sure you have these lines after updateAppLayout function:
+window.addEventListener("resize", updateAppLayout);
+updateAppLayout(); // Initial call
+// Update the stats positioning for better small screen support:
+// Replace the existing stats configuration with:
+
+stats.showPanel(2);
+
+// Dynamic positioning based on screen size
+function updateStatsPosition() {
+  const width = window.innerWidth;
+  if (width <= 900) {
+    stats.dom.style.left = `14rem`;
+  } else if (width <= 1440) {
+    stats.dom.style.left = `18rem`;
+  } else {
+    stats.dom.style.left = `26rem`;
+  }
+  stats.dom.style.zIndex = "unset";
+}
+
+updateStatsPosition();
+window.addEventListener("resize", updateStatsPosition);
+viewport.append(stats.dom);
