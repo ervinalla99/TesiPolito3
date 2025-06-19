@@ -52,44 +52,103 @@
       visibility: hidden;
     }
 
-    /* Set dimensions for both Plan-Nav and Cross-Section */
+    /* Responsive panel styles */
     .Plan-Nav,
     .Cross-Section,
     .Profile {
       position: absolute;
       outline: 2px solid #2ff598;
       visibility: hidden;
-      /* Initially hidden */
       opacity: 0;
       pointer-events: none;
       z-index: 1000;
+      box-sizing: border-box;
+      transition: width 0.2s, height 0.2s, left 0.2s, top 0.2s;
     }
 
     .Plan-Nav {
       bottom: 0;
       left: 0;
-      width: 26rem;
-      height: calc(100vh / 2.5);
+      width: 24vw;
+      min-width: 220px;
+      max-width: 100vw;
+      height: 35vh;
+      min-height: 180px;
+      max-height: 50vh;
     }
 
-    /* Make sure Cross-Section is on top of Plan-Nav */
     .Cross-Section {
-      bottom: calc(100vh / 2.5);
-      /* Adjust based on Plan-Nav height */
+      bottom: 35vh;
       left: 0;
-      width: 26rem;
-      height: calc(100vh / 3.02);
+      width: 24vw;
+      min-width: 220px;
+      max-width: 100vw;
+      height: 25vh;
+      min-height: 120px;
+      max-height: 40vh;
       z-index: 1000;
-      /* Ensure it is above other panels */
     }
 
     .Profile {
       top: 0;
-      /* Adjust based on Plan-Nav height */
+      left: 0;
       width: 100vw;
-      height: calc(100vh / 3.75);
+      height: 20vh;
+      min-height: 100px;
+      max-height: 30vh;
     }
 
+    @media (max-width: 900px) {
+      .Plan-Nav, .Cross-Section {
+        width: 40vw;
+        min-width: 120px;
+      }
+      .Profile {
+        height: 18vh;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .Plan-Nav, .Cross-Section {
+        width: 98vw;
+        left: 1vw;
+        min-width: 0;
+        max-width: 100vw;
+      }
+      .Plan-Nav {
+        height: 30vh;
+        min-height: 80px;
+      }
+      .Cross-Section {
+        height: 20vh;
+        min-height: 60px;
+        bottom: 30vh;
+      }
+      .Profile {
+        height: 15vh;
+        min-height: 60px;
+      }
+    }
+
+    @media (max-width: 1366px) {
+      .Plan-Nav, .Cross-Section {
+        width: 30vw;
+        min-width: 100px;
+      }
+      .Plan-Nav {
+        height: 25vh;
+        min-height: 60px;
+      }
+      .Cross-Section {
+        height: 16vh;
+        min-height: 40px;
+        bottom: 25vh;
+      }
+      .Profile {
+        height: 12vh;
+        min-height: 40px;
+      }
+    }
 
     .hidden {
       visibility: hidden;
@@ -143,6 +202,79 @@
         right: 5px;
       }
     }
+    @media (max-width: 900px) {
+  #elementDataPanel {
+    max-width: 30vw;
+    min-width: 120px;
+  }
+}
+
+@media (max-width: 600px) {
+  #elementDataPanel {
+    max-width: 40vw;
+    min-width: 100px;
+  }
+}
+
+
+/* Medium screens (1024px to 1440px) */
+@media (min-width: 901px) and (max-width: 1440px) {
+  .Plan-Nav, .Cross-Section {
+    width: 28vw;
+    min-width: 140px;
+  }
+  .Plan-Nav {
+    height: 28vh;
+    min-height: 100px;
+  }
+  .Cross-Section {
+    height: 18vh;
+    min-height: 80px;
+    bottom: 28vh;
+  }
+  .Profile {
+    height: 14vh;
+    min-height: 60px;
+  }
+}
+
+/* Small screens with low height */
+@media (max-height: 768px) {
+  .Plan-Nav {
+    height: 32vh;
+    min-height: 120px;
+  }
+  .Cross-Section {
+    height: 20vh;
+    min-height: 80px;
+    bottom: 32vh;
+  }
+  .Profile {
+    height: 16vh;
+    min-height: 80px;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 768px) and (max-height: 600px) {
+  .Plan-Nav, .Cross-Section {
+    width: 95vw;
+    left: 2.5vw;
+  }
+  .Plan-Nav {
+    height: 35vh;
+    min-height: 100px;
+  }
+  .Cross-Section {
+    height: 22vh;
+    min-height: 70px;
+    bottom: 35vh;
+  }
+  .Profile {
+    height: 18vh;
+    min-height: 70px;
+  }
+}
   </style>
 </head>
 
